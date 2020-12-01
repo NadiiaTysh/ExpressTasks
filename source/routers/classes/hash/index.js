@@ -14,7 +14,7 @@ export const updateByHash = (req, res) => {
 };
 export const deleteByHash = (req, res) => {
     try {
-        res.sendStatus(204);
+        res.status(204).send();
     } catch (error) {
         res.status(400).json({ message: error.message });
     }

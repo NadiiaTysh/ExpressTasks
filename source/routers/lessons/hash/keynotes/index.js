@@ -1,18 +1,18 @@
-export const getByHash = (req, res) => {
+export const addKeynotesByHash = (req, res) => {
     try {
-        res.status(200).json({ data: {} });
+        res.sendStatus(204);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 };
-export const updateByHash = (req, res) => {
+export const getKeynotesByHash = (req, res) => {
     try {
-        res.status(200).json({ data: {} });
+        res.sendStatus(200);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 };
-export const deleteByHash = (req, res) => {
+export const deleteKeynotesByHash = (req, res) => {
     try {
         res.sendStatus(204);
     } catch (error) {
