@@ -1,8 +1,7 @@
-// Core
 import rateLimit from 'express-rate-limit';
 
-export const limiter = (numRequest, resetIn) => rateLimit({
+export const limiter = (numRequests, resetIn) => rateLimit({
     windowMs: resetIn,
-    max:      numRequest,
+    max:      numRequests,
     headers:  false,
 });

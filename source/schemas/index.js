@@ -1,1 +1,2 @@
-export { createUser } from './createUser';
+export { userSchema } from './userSchema';
+export { classSchema } from './classSchema';

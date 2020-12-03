@@ -5,9 +5,12 @@ import { getByHash, updateByHash, deleteByHash } from './hash';
 import { addKeynotesByHash, getKeynotesByHash, deleteKeynotesByHash } from './hash/keynotes';
 import { addVideosByHash, getVideosByHash, deleteVideosByHash } from './hash/videos';
 
+// Utils
+import { limiter } from '../../utils';
+
 const router = express.Router();
 
-router.get('/', get);
+router.get('/', [ limiter(2, 1000 * 60) ], get);
 router.post('/', post);
 
 router.get('/:lessonHash', getByHash);

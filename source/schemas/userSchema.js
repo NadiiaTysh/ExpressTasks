@@ -1,4 +1,4 @@
-export const createUser = {
+export const userSchema = {
     type:       'object',
     properties: {
         name: {
@@ -15,13 +15,13 @@ export const createUser = {
         password: {
             type: 'string',
         },
-        role: {
-            type: 'string',
-            enum: [ 'newbie', 'student', 'teacher' ],
-        },
         sex: {
             type: 'string',
             enum: [ 'f', 'm' ],
+        },
+        role: {
+            type: 'string',
+            enum: [ 'newbie', 'student', 'teacher' ],
         },
     },
     required:             [ 'name', 'email', 'phone', 'password', 'sex' ],
