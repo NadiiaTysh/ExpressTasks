@@ -1,9 +1,13 @@
 export const classSchema = {
     type:       'object',
     properties: {
-        title:       'string',
-        description: 'string',
-        order:       {
+        title: {
+            type: 'string',
+        },
+        description: {
+            type: 'string',
+        },
+        order: {
             type: 'number',
             min:  1,
             max:  9999,

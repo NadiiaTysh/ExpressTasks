@@ -8,7 +8,7 @@ import { enroll, expel } from './education';
 import { limiter, validator } from '../../utils';
 
 // Schemas
-import { classSchema } from '../../schemas';
+import { classSchema, enrollSchema, expelSchema } from '../../schemas';
 
 const router = express.Router();
 
@@ -18,7 +18,7 @@ router.post('/', [ validator(classSchema) ], post);
 router.get('/:classHash', [ limiter(2, 1000 * 60) ], getByHash);
 router.put('/:classHash', [ validator(classSchema) ], updateByHash);
 router.delete('/:classHash', deleteByHash);
-router.post('/:classHash/enroll', enroll);
-router.post('/:classHash/expel', expel);
+router.post('/:classHash/enroll', [ validator(enrollSchema) ], enroll);
+router.post('/:classHash/expel', [ validator(expelSchema) ], expel);
 
 export { router as classes };
