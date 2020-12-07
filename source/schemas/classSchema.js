@@ -13,6 +13,7 @@ export const classSchema = {
             max:  9999,
         },
         duration: {
+            type:    'object',
             started: {
                 type:   'string',
                 format: 'date',
@@ -21,8 +22,9 @@ export const classSchema = {
                 type:   'string',
                 format: 'date',
             },
+            required: [ 'started', 'closed' ],
         },
     },
-    required:             [ 'title', 'description', 'order', 'duration', 'started', 'closed' ],
+    required:             [ 'title', 'description', 'order', 'duration' ],
     additionalProperties: false,
 };
