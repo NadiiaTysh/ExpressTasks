@@ -16,16 +16,16 @@ const router = express.Router();
 router.get('/', [ limiter(2, 1000 * 60) ], get);
 router.post('/', [ validator(lessonSchema) ], post);
 
-router.get('/:lessonHash', getByHash);
-router.put('/:lessonHash', updateByHash);
+router.get('/:lessonHash', [ limiter(2, 1000 * 60) ], getByHash);
+router.put('/:lessonHash', [ validator(lessonSchema) ], updateByHash);
 router.delete('/:lessonHash', deleteByHash);
 
 router.post('/:lessonHash/keynotes', [ validator(keynoteSchema) ], addKeynotesByHash);
-router.get('/:lessonHash/keynotes/:keynoteHash', getKeynotesByHash);
+router.get('/:lessonHash/keynotes/:keynoteHash', [ limiter(2, 1000 * 60) ], getKeynotesByHash);
 router.delete('/:lessonHash/keynotes/:keynoteHash', deleteKeynotesByHash);
 
 router.post('/:lessonHash/videos', [ validator(videoSchema) ], addVideosByHash);
-router.get('/:lessonHash/videos/:videoHash', getVideosByHash);
+router.get('/:lessonHash/videos/:videoHash', [ limiter(2, 1000 * 60) ], getVideosByHash);
 router.delete('/:lessonHash/videos/:videoHash', deleteVideosByHash);
 
 export { router as lessons };

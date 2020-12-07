@@ -3,11 +3,11 @@ import express from 'express';
 import { login, logout } from './route';
 
 // Utils
-import { limiter } from '../../utils';
+import { authenticate } from '../../utils';
 
 const router = express.Router();
 
-router.post('/login', [ limiter(2, 1000 * 60) ], login);
-router.post('/logout', [ limiter(2, 1000 * 60) ], logout);
+router.post('/login', login);
+router.post('/logout', [ authenticate ], logout);
 
 export { router as auth };
