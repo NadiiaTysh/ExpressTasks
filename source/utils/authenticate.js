@@ -1,8 +1,10 @@
+import { getPassword } from './env/getPassword';
+
 export const authenticate = (req, res, next) => {
     const authHeader = req.headers.authorization;
-    const allowedPasswords = [ 'password', 'admin' ];
-    const isAllowedPass = allowedPasswords.some((el) => el === authHeader);
-console.log(req.session);
+    const password = getPassword();
+    const isAllowedPass = authHeader === password;
+
     if (!authHeader) {
         return res.status(401).json({
             status:  401,

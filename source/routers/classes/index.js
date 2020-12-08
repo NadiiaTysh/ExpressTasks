@@ -5,7 +5,7 @@ import { getByHash, updateByHash, deleteByHash } from './hash';
 import { enroll, expel } from './education';
 
 // Utils
-import { limiter, validator } from '../../utils';
+import { limiter, validator, authenticate } from '../../utils';
 
 // Schemas
 import { classSchema, enrollSchema, expelSchema } from '../../schemas';
@@ -13,12 +13,12 @@ import { classSchema, enrollSchema, expelSchema } from '../../schemas';
 const router = express.Router();
 
 router.get('/', [ limiter(2, 1000 * 60) ], get);
-router.post('/', [ validator(classSchema) ], post);
+router.post('/', [ validator(classSchema), authenticate ], post);
 
-router.get('/:classHash', [ limiter(2, 1000 * 60) ], getByHash);
-router.put('/:classHash', [ validator(classSchema) ], updateByHash);
-router.delete('/:classHash', deleteByHash);
-router.post('/:classHash/enroll', [ validator(enrollSchema) ], enroll);
-router.post('/:classHash/expel', [ validator(expelSchema) ], expel);
+router.get('/:classHash', [ limiter(2, 1000 * 60), authenticate ], getByHash);
+router.put('/:classHash', [ validator(classSchema), authenticate ], updateByHash);
+router.delete('/:classHash', [ authenticate ], deleteByHash);
+router.post('/:classHash/enroll', [ validator(enrollSchema), authenticate ], enroll);
+router.post('/:classHash/expel', [ validator(expelSchema), authenticate ], expel);
 
 export { router as classes };
