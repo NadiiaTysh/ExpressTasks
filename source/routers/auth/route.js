@@ -6,6 +6,7 @@ export const login = (req, res) => {
     }
 };
 export const logout = (req, res) => {
+    // throw new Error('Ooops');
     try {
         res.sendStatus(204);
     } catch (error) {
