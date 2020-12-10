@@ -3,7 +3,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 
 // Tools
-import { logger, errorLogger } from './utils';
+import { logger, errorLogger, NotFoundError } from './utils';
 
 // Routers
 import * as routers from './routers';
@@ -26,6 +26,13 @@ app.use('/users', routers.users);
 app.use('/', routers.auth);
 app.use('/classes', routers.classes);
 app.use('/lessons', routers.lessons);
+
+app.use('*', (req, rws, next) => {
+    const error = new NotFoundError(
+        `Cannot find right route for method ${req.method} and path ${req.originalUrl}`,
+    );
+    next(error);
+});
 
 if (process.env.NODE_ENV !== 'test') {
     // eslint-disable-next-line
