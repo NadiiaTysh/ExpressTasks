@@ -3,7 +3,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 
 // Tools
-import { logger, errorLogger, NotFoundError } from './utils';
+import { logger, errorLogger, NotFoundError, notFoundLogger, validationLogger } from './utils';
 
 // Routers
 import * as routers from './routers';
@@ -29,7 +29,7 @@ app.use('/lessons', routers.lessons);
 
 app.use('*', (req, rws, next) => {
     const error = new NotFoundError(
-        `Cannot find right route for method ${req.method} and path ${req.originalUrl}`,
+        `${req.method}: ${req.originalUrl}`,
     );
     next(error);
 });
@@ -40,7 +40,19 @@ if (process.env.NODE_ENV !== 'test') {
         const { name, message, statusCode } = error;
         const errorMessage = `${name}: ${message}`;
 
-        errorLogger.error(errorMessage);
+        switch (error.name) {
+            case 'NotFoundError':
+                notFoundLogger.error(message);
+                break;
+
+            case 'ValidationError':
+                validationLogger.error(message);
+                break;
+
+            default:
+                errorLogger.error(errorMessage);
+                break;
+        }
 
         const status = statusCode || 500;
         res.status(status).json({ message: message });
