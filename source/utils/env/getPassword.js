@@ -1,4 +1,4 @@
-//Tools
+// Tools
 import { ValidationError } from '../errors';
 
 export const getPassword = () => {

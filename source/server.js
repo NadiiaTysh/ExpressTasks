@@ -1,15 +1,24 @@
 // Core
 import express from 'express';
 import bodyParser from 'body-parser';
+import session from 'express-session';
 
 // Tools
-import { logger, errorLogger, NotFoundError, notFoundLogger, validationLogger } from './utils';
+import {
+    logger,
+    errorLogger,
+    NotFoundError,
+    notFoundLogger,
+    validationLogger,
+    sessionOptions,
+} from './utils';
 
 // Routers
 import * as routers from './routers';
 
 const app = express();
 
+app.use(session(sessionOptions));
 app.use(bodyParser.json({ limit: '10kb' }));
 
 // Logger
@@ -27,7 +36,7 @@ app.use('/', routers.auth);
 app.use('/classes', routers.classes);
 app.use('/lessons', routers.lessons);
 
-app.use('*', (req, rws, next) => {
+app.use('*', (req, res, next) => {
     const error = new NotFoundError(
         `${req.method}: ${req.originalUrl}`,
     );
