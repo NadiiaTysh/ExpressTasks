@@ -1,4 +1,4 @@
-import { getPassword } from './env';
+import { getPassword } from '../env';
 
 export const sessionOptions = {
     key:               'user',

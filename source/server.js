@@ -1,7 +1,8 @@
 // Core
 import express from 'express';
 import bodyParser from 'body-parser';
-import session from 'express-session';
+import passport from 'passport';
+import { Strategy } from 'passport-jwt';
 
 // Tools
 import {
@@ -10,7 +11,7 @@ import {
     NotFoundError,
     notFoundLogger,
     validationLogger,
-    sessionOptions,
+    jwtOptions,
 } from './utils';
 
 // Routers
@@ -18,7 +19,9 @@ import * as routers from './routers';
 
 const app = express();
 
-app.use(session(sessionOptions));
+passport.use(new Strategy(jwtOptions, (jwtPayload, done) => {
+    return done(null, jwtPayload);
+}));
 app.use(bodyParser.json({ limit: '10kb' }));
 
 // Logger
