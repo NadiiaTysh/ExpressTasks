@@ -2,7 +2,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import passport from 'passport';
-import { Strategy } from 'passport-jwt';
+import { Strategy as GitHubStrategy } from 'passport-github2';
 
 // Tools
 import {
@@ -11,7 +11,7 @@ import {
     NotFoundError,
     notFoundLogger,
     validationLogger,
-    jwtOptions,
+    github2Options,
 } from './utils';
 
 // Routers
@@ -19,9 +19,24 @@ import * as routers from './routers';
 
 const app = express();
 
-passport.use(new Strategy(jwtOptions, (jwtPayload, done) => {
-    return done(null, jwtPayload);
-}));
+passport.serializeUser((user, done) => {
+    done(null, user);
+});
+
+passport.deserializeUser((obj, done) => {
+    done(null, obj);
+});
+
+passport.use(
+    new GitHubStrategy(
+        github2Options,
+        (accessToken, refreshToken, profile, done) => {
+            process.nextTick(() => {
+                return done(null, profile);
+            });
+        },
+    ),
+);
 app.use(bodyParser.json({ limit: '10kb' }));
 
 // Logger
