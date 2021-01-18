@@ -6,6 +6,9 @@
 */
 
 const chalk = require('chalk');
+const path = require('path');
+
+require('dotenv').config({ path: path.resolve('.env.test') });
 
 module.exports = async function() {
     console.log(chalk.green('λ'));

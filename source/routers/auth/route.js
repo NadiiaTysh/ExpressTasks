@@ -1,6 +1,7 @@
-export const login = (req, res) => {
+export const authLogin = (req, res) => {
     try {
-        res.status(204).send();
+        req.session.user = { email: 'jdoe@example.com' };
+        res.sendStatus(204);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -8,14 +9,6 @@ export const login = (req, res) => {
 export const logout = (req, res) => {
     // throw new Error('Ooops');
     try {
-        res.sendStatus(204);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-};
-export const authLogin = (req, res) => {
-    try {
-        req.session.user = { email: 'jdoe@example.com' };
         res.sendStatus(204);
     } catch (error) {
         res.status(400).json({ message: error.message });
