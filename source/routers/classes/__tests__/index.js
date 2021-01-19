@@ -5,7 +5,13 @@ import request from 'supertest';
 import { app } from '../../../server';
 const server = request.agent(app);
 
-describe('should handle get request', () => {
+describe('should handle unsecure route /classes', () => {
+    test('should return status 200 for correct data', async (done) => {
+        const response = await server.get('/classes');
+
+        expect(response.statusCode).toBe(200);
+        done();
+    });
     test('should return a collection array', async (done) => {
         const response = await server.get('/classes');
 
@@ -14,12 +20,6 @@ describe('should handle get request', () => {
         } = response;
         const isDataArray = Array.isArray(data);
         expect(isDataArray).toBeTruthy();
-        done();
-    });
-    test('should return status 200 for correct user data', async (done) => {
-        const response = await server.get('/classes');
-
-        expect(response.statusCode).toBe(200);
         done();
     });
 });

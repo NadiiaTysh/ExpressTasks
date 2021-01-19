@@ -2,10 +2,10 @@
 import request from 'supertest';
 
 // Tools
-import { app } from '../../../server';
+import { app } from '../../../../server';
 const server = request.agent(app);
 
-describe('should handle secure route /users', () => {
+describe('should handle secure get route classes by hash', () => {
     beforeAll(async (done) => {
         const email = 'jdoe@email.com';
         const response = await server.post('/login').send({ email });
@@ -16,20 +16,19 @@ describe('should handle secure route /users', () => {
         done();
     });
 
-    test('should have 200 status code for correct data', async (done) => {
-        const response = await server.get('/users');
+    test('should have GET 200 status code for corret data', async (done) => {
+        const response = await server.get('/classes/123');
 
         expect(response.statusCode).toBe(200);
         done();
     });
-    test('should return a collection array', async (done) => {
-        const response = await server.get('/users');
+    test('should return a document object', async (done) => {
+        const response = await server.get('/classes/123');
 
         const {
             body: { data },
         } = response;
-        const isDataArray = Array.isArray(data);
-        expect(isDataArray).toBeTruthy();
+        expect(typeof data).toBe('object');
         done();
     });
 });

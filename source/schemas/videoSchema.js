@@ -1,4 +1,4 @@
-export const viedoSchema = {
+export const videoSchema = {
     type:       'object',
     properties: {
         title: {
