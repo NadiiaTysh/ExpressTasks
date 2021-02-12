@@ -1,15 +1,21 @@
 import mongoose from 'mongoose';
 
 const lessonSchema = new mongoose.Schema({
-    title:        String,
-    description:  String,
-    order:        Number,
-    hash:         String,
+    title:       String,
+    description: String,
+    order:       Number,
+    hash:        {
+        type:   String,
+        unique: true,
+    },
     availability: [ String ],
     content:      {
         videos: [
             {
-                hash:  String,
+                hash: {
+                    type:   String,
+                    unique: true,
+                },
                 title: String,
                 order: Number,
                 uri:   String,
@@ -17,7 +23,10 @@ const lessonSchema = new mongoose.Schema({
         ],
         keynotes: [
             {
-                hash:  String,
+                hash: {
+                    type:   String,
+                    unique: true,
+                },
                 title: String,
                 order: Number,
                 uri:   String,
@@ -27,6 +36,8 @@ const lessonSchema = new mongoose.Schema({
     created:  Date,
     modified: Date,
 });
-const lessons = mongoose.model('lessons', lessonSchema);
 
+lessonSchema.index({ order: 1 });
+
+const lessons = mongoose.model('lessons', lessonSchema);
 export { lessons };

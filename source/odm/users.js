@@ -13,7 +13,10 @@ const userSchema = new mongoose.Schema({
     ],
     emails: [
         {
-            email:   String,
+            email: {
+                type:   String,
+                unique: true,
+            },
             primary: Boolean,
         },
     ],
@@ -26,12 +29,18 @@ const userSchema = new mongoose.Schema({
         github:   String,
         skype:    String,
     },
-    notes:    String,
-    hash:     String,
+    notes: String,
+    hash:  {
+        type:   String,
+        unique: true,
+    },
     disabled: Boolean,
     created:  Date,
     modified: Date,
 });
-const users = mongoose.model('users', userSchema);
 
+userSchema.index({ 'name.first': 1, 'name.last': 1 });
+userSchema.index({ notes: 'text' });
+
+const users = mongoose.model('users', userSchema);
 export { users };

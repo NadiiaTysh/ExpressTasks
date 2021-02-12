@@ -3,8 +3,11 @@ import mongoose from 'mongoose';
 const classSchema = new mongoose.Schema({
     title:       String,
     description: String,
-    hash:        String,
-    students:    [
+    hash:        {
+        type:   String,
+        unique: true,
+    },
+    students: [
         {
             user:     mongoose.SchemaTypes.ObjectId,
             status:   String,
@@ -26,6 +29,9 @@ const classSchema = new mongoose.Schema({
     created:  Date,
     modified: Date,
 });
-const classes = mongoose.model('classes', classSchema);
 
+classSchema.index({ title: 'text', description: 'text' });
+classSchema.index({ order: 1 });
+
+const classes = mongoose.model('classes', classSchema);
 export { classes };
