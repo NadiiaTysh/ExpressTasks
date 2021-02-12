@@ -21,10 +21,3 @@ export const authLogin = (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
-export const githubLogin = (req, res) => {
-    try {
-        res.status(204).send();
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-};

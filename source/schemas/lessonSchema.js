@@ -65,5 +65,5 @@ export const lessonSchema = {
         },
     },
     required:             [ 'title', 'description', 'order', 'availability' ],
-    additionalProperties: false,
+    additionalProperties: true,
 };

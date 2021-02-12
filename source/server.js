@@ -1,8 +1,7 @@
 // Core
 import express from 'express';
 import bodyParser from 'body-parser';
-import passport from 'passport';
-import { Strategy as GitHubStrategy } from 'passport-github2';
+import session from 'express-session';
 
 // Tools
 import {
@@ -11,7 +10,7 @@ import {
     NotFoundError,
     notFoundLogger,
     validationLogger,
-    github2Options,
+    sessionOptions,
 } from './utils';
 
 // Routers
@@ -19,24 +18,7 @@ import * as routers from './routers';
 
 const app = express();
 
-passport.serializeUser((user, done) => {
-    done(null, user);
-});
-
-passport.deserializeUser((obj, done) => {
-    done(null, obj);
-});
-
-passport.use(
-    new GitHubStrategy(
-        github2Options,
-        (accessToken, refreshToken, profile, done) => {
-            process.nextTick(() => {
-                return done(null, profile);
-            });
-        },
-    ),
-);
+app.use(session(sessionOptions));
 app.use(bodyParser.json({ limit: '10kb' }));
 
 // Logger

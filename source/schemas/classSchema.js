@@ -26,5 +26,5 @@ export const classSchema = {
         },
     },
     required:             [ 'title', 'description', 'order', 'duration' ],
-    additionalProperties: false,
+    additionalProperties: true,
 };

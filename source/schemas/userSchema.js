@@ -2,15 +2,33 @@ export const userSchema = {
     type:       'object',
     properties: {
         name: {
-            type:      'string',
-            minLength: 3,
+            first: {
+                type:      'string',
+                minLength: 3,
+            },
+            last: {
+                type:      'string',
+                minLength: 3,
+            },
         },
-        email: {
-            type:   'string',
-            format: 'email',
+        phones: {
+            type:  'array',
+            phone: {
+                type: 'string',
+            },
+            primary: {
+                type: 'boolean',
+            },
         },
-        phone: {
-            type: 'string',
+        emails: {
+            type:  'array',
+            email: {
+                type:   'string',
+                format: 'email',
+            },
+            primary: {
+                type: 'boolean',
+            },
         },
         password: {
             type: 'string',
@@ -19,11 +37,14 @@ export const userSchema = {
             type: 'string',
             enum: [ 'f', 'm' ],
         },
-        role: {
-            type: 'string',
-            enum: [ 'newbie', 'student', 'teacher' ],
+        roles: {
+            type: 'array',
+            role: {
+                type: 'string',
+                enum: [ 'newbie', 'student', 'teacher' ],
+            },
         },
     },
-    required:             [ 'name', 'email', 'phone', 'password', 'sex' ],
-    additionalProperties: false,
+    required:             [ 'name', 'emails', 'phones', 'password', 'sex' ],
+    additionalProperties: true,
 };
