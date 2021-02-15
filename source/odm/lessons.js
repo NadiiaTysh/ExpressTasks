@@ -33,9 +33,7 @@ const lessonSchema = new mongoose.Schema({
             },
         ],
     },
-    created:  Date,
-    modified: Date,
-});
+}, { timestamps: { createdAt: 'created', updatedAt: 'modified' } });
 
 lessonSchema.index({ order: 1 });
 

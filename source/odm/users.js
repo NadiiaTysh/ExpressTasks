@@ -35,9 +35,7 @@ const userSchema = new mongoose.Schema({
         unique: true,
     },
     disabled: Boolean,
-    created:  Date,
-    modified: Date,
-});
+}, { timestamps: { createdAt: 'created', updatedAt: 'modified' } });
 
 userSchema.index({ 'name.first': 1, 'name.last': 1 });
 userSchema.index({ notes: 'text' });
