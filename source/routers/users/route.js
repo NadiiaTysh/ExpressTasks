@@ -1,9 +1,12 @@
 import { Users } from '../../controllers';
 import { Logs } from '../../controllers';
 
-export const get = (req, res) => {
+export const get = async (req, res) => {
     try {
-        res.status(200).json({ data: [] });
+        const user = new Users();
+        const data = await user.getAllRecords();
+
+        res.status(200).json({ data });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }

@@ -12,4 +12,10 @@ export class Lessons {
 
         return data;
     }
+
+    async getAllRecords(pageNum, perPage) {
+        const data = await this.models.lessons.getAllRecords(pageNum, perPage);
+
+        return data;
+    }
 }

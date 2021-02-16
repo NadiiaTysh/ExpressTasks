@@ -10,4 +10,12 @@ export class Users {
 
         return data;
     }
+
+    async getAllRecords(pageNum = 1, perPage = 10) {
+        const data = await users.find({})
+            .skip((pageNum - 1) * perPage)
+            .limit(perPage);
+
+        return data;
+    }
 }

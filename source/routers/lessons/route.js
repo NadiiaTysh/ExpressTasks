@@ -1,9 +1,12 @@
 import { Lessons } from '../../controllers';
 import { Logs } from '../../controllers';
 
-export const get = (req, res) => {
+export const get = async (req, res) => {
     try {
-        res.status(200).json({ data: [] });
+        const lesson = new Lessons();
+        const data = await lesson.getAllRecords();
+
+        res.status(200).json({ data });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }

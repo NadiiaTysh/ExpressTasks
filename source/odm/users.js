@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { v4 as uuidv4 } from 'uuid';
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -31,8 +32,9 @@ const userSchema = new mongoose.Schema({
     },
     notes: String,
     hash:  {
-        type:   String,
-        unique: true,
+        type:    String,
+        unique:  true,
+        default: uuidv4,
     },
     disabled: Boolean,
 }, { timestamps: { createdAt: 'created', updatedAt: 'modified' } });

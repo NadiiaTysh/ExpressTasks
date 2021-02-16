@@ -12,4 +12,10 @@ export class Users {
 
         return data;
     }
+
+    async getAllRecords(pageNum, perPage) {
+        const data = await this.models.users.getAllRecords(pageNum, perPage);
+
+        return data;
+    }
 }
