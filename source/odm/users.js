@@ -1,26 +1,26 @@
 import mongoose from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
 
+const childPhones = new mongoose.Schema({
+    phone:   String,
+    primary: Boolean,
+}, { _id: false });
+
+const childEmails = new mongoose.Schema({
+    email: {
+        type:   String,
+        unique: true,
+    },
+    primary: Boolean,
+}, { _id: false });
+
 const userSchema = new mongoose.Schema({
     name: {
         first: String,
         last:  String,
     },
-    phones: [
-        {
-            phone:   String,
-            primary: Boolean,
-        },
-    ],
-    emails: [
-        {
-            email: {
-                type:   String,
-                unique: true,
-            },
-            primary: Boolean,
-        },
-    ],
+    phones:   [ childPhones ],
+    emails:   [ childEmails ],
     password: String,
     sex:      String,
     roles:    [ String ],

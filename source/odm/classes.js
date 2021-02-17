@@ -1,6 +1,18 @@
 import mongoose from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
 
+const childStudents = new mongoose.Schema({
+    user:     mongoose.SchemaTypes.ObjectId,
+    status:   String,
+    expelled: Boolean,
+    notes:    String,
+}, { _id: false });
+
+const childLessons = new mongoose.Schema({
+    lesson:    mongoose.SchemaTypes.ObjectId,
+    scheduled: Date,
+}, { _id: false });
+
 const classSchema = new mongoose.Schema({
     title:       String,
     description: String,
@@ -9,20 +21,8 @@ const classSchema = new mongoose.Schema({
         unique:  true,
         default: uuidv4,
     },
-    students: [
-        {
-            user:     mongoose.SchemaTypes.ObjectId,
-            status:   String,
-            expelled: Boolean,
-            notes:    String,
-        },
-    ],
-    lessons: [
-        {
-            lesson:    mongoose.SchemaTypes.ObjectId,
-            scheduled: Date,
-        },
-    ],
+    students: [ childStudents ],
+    lessons:  [ childLessons ],
     duration: {
         started: Date,
         closed:  Date,

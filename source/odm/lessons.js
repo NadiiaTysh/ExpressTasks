@@ -1,6 +1,28 @@
 import mongoose from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
 
+const childVideos = new mongoose.Schema({
+    hash: {
+        type:    String,
+        unique:  true,
+        default: uuidv4,
+    },
+    title: String,
+    order: Number,
+    uri:   String,
+}, { _id: false });
+
+const childKeynotes = new mongoose.Schema({
+    hash: {
+        type:    String,
+        unique:  true,
+        default: uuidv4,
+    },
+    title: String,
+    order: Number,
+    uri:   String,
+}, { _id: false });
+
 const lessonSchema = new mongoose.Schema({
     title:       String,
     description: String,
@@ -12,30 +34,9 @@ const lessonSchema = new mongoose.Schema({
     },
     availability: [ String ],
     content:      {
-        videos: [
-            {
-                hash: {
-                    type:    String,
-                    unique:  true,
-                    default: uuidv4,
-                },
-                title: String,
-                order: Number,
-                uri:   String,
-            },
-        ],
-        keynotes: [
-            {
-                hash: {
-                    type:    String,
-                    unique:  true,
-                    default: uuidv4,
-                },
-                title: String,
-                order: Number,
-                uri:   String,
-            },
-        ],
+        type:     Object,
+        videos:   [ childVideos ],
+        keynotes: [ childKeynotes ],
     },
 }, { timestamps: { createdAt: 'created', updatedAt: 'modified' } });
 

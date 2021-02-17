@@ -18,4 +18,22 @@ export class Users {
 
         return data;
     }
+
+    async getOneRecord(hash) {
+        const data = await this.models.users.getOneRecord(hash);
+
+        return data;
+    }
+
+    async modifyOneRecord(hash, payload) {
+        const data = await this.models.users.modifyOneRecord(hash, payload);
+
+        return data;
+    }
+
+    async removeOneRecord(hash) {
+        const data = await this.models.users.removeOneRecord(hash);
+
+        return data;
+    }
 }

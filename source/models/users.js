@@ -18,4 +18,22 @@ export class Users {
 
         return data;
     }
+
+    async getOneRecord(hash) {
+        const data = await users.findOne({ hash });
+
+        return data;
+    }
+
+    async modifyOneRecord(hash, payload) {
+        const data = await users.findOneAndUpdate({ hash }, payload, { new: true });
+
+        return data;
+    }
+
+    async removeOneRecord(hash) {
+        const data = await users.findOneAndRemove({ hash });
+
+        return data;
+    }
 }

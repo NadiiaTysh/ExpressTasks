@@ -3,8 +3,8 @@ import { Logs } from '../../controllers';
 
 export const get = async (req, res) => {
     try {
-        const lesson = new Lessons();
-        const data = await lesson.getAllRecords();
+        const lessons = new Lessons();
+        const data = await lessons.getAllRecords();
 
         res.status(200).json({ data });
     } catch (error) {
