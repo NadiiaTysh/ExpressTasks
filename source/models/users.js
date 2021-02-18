@@ -1,3 +1,5 @@
+import bcrypt from 'bcryptjs';
+
 import { users } from '../odm';
 
 export class Users {
@@ -6,9 +8,10 @@ export class Users {
     }
 
     async create() {
-        const data = await users.create(this.data);
+        const user = await this._transformCreateUser(this.data);
+        const data = await users.create(user);
 
-        return data;
+        return { hash: data.hash };
     }
 
     async getAllRecords(pageNum = 1, perPage = 10) {
@@ -35,5 +38,24 @@ export class Users {
         const data = await users.findOneAndRemove({ hash });
 
         return data;
+    }
+
+    async _transformCreateUser(data) {
+        const { name, emails, phones, password, sex, roles } = data;
+        const hashedPassword = await bcrypt.hash(password, 11);
+        const [ first, last ] = name.split(' ');
+        const user = {
+            name: {
+                first,
+                last,
+            },
+            sex,
+            emails,
+            roles,
+            phones,
+            password: hashedPassword,
+        };
+
+        return user;
     }
 }

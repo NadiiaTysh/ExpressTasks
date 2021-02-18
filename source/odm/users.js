@@ -21,10 +21,20 @@ const userSchema = new mongoose.Schema({
     },
     phones:   [ childPhones ],
     emails:   [ childEmails ],
-    password: String,
-    sex:      String,
-    roles:    [ String ],
-    social:   {
+    password: {
+        type:     String,
+        select:   false,
+        required: true,
+    },
+    sex:   String,
+    roles: [
+        {
+            type:    String,
+            default: 'newbie',
+            enum:    [ 'newbie', 'student', 'teacher' ],
+        },
+    ],
+    social: {
         facebook: String,
         linkedin: String,
         github:   String,

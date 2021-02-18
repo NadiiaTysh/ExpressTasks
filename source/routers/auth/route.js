@@ -1,21 +1,21 @@
-export const login = (req, res) => {
+import { Auth } from '../../controllers';
+
+export const login = async (req, res) => {
     try {
-        res.status(204).send();
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-};
-export const logout = (req, res) => {
-    // throw new Error('Ooops');
-    try {
+        const header = req.get('authorization');
+        const auth = new Auth(header);
+
+        const data = await auth.login();
+        req.session.user = data;
+
         res.sendStatus(204);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 };
-export const authLogin = (req, res) => {
+
+export const logout = (req, res) => {
     try {
-        req.session.user = { email: 'jdoe@example.com' };
         res.sendStatus(204);
     } catch (error) {
         res.status(400).json({ message: error.message });

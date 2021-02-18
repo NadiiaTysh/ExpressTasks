@@ -1,6 +1,15 @@
+import { NotFoundError } from './errors';
+
 export const authenticate = (req, res, next) => {
-    if (!req.session.user || !req.session.user.email) {
-        return res.status(401).json({ message: 'Credentials are not valid' });
+    if (!req.session.user) {
+        return next(new NotFoundError('cookie not found', 401));
     }
-    next();
+
+    const { hash } = req.session.user;
+
+    if (hash) {
+        next();
+    } else {
+        res.status(401).json({ message: 'authentication credentials are not valid' });
+    }
 };
