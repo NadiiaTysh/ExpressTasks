@@ -1,12 +1,12 @@
 import mongoose from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
 
-// import { users, lessons } from './';
+import { users, lessons } from './';
 
 const childStudents = new mongoose.Schema({
     user: {
         type: mongoose.SchemaTypes.ObjectId,
-        ref:  'users',
+        ref:  users,
     },
     status:   String,
     expelled: Boolean,
@@ -16,7 +16,7 @@ const childStudents = new mongoose.Schema({
 const childLessons = new mongoose.Schema({
     lesson: {
         type: mongoose.SchemaTypes.ObjectId,
-        ref:  'lessons',
+        ref:  lessons,
     },
     scheduled: Date,
 }, { _id: false });

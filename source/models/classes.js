@@ -16,13 +16,21 @@ export class Classes {
     async getAllRecords(pageNum = 1, perPage = 10) {
         const data = await classes.find({})
             .skip((pageNum - 1) * perPage)
-            .limit(perPage);
+            .limit(perPage)
+            .populate({ path: 'students.user', select: '-_id -__v'})
+            .populate({ path: 'lessons.lesson', select: '-_id -__v'})
+            .select('-_id -__v')
+            .lean();
 
         return data;
     }
 
     async getOneRecord(hash) {
-        const data = await classes.findOne({ hash });
+        const data = await classes.findOne({ hash })
+            .populate({ path: 'students.user', select: '-_id -__v'})
+            .populate({ path: 'lessons.lesson', select: '-_id -__v'})
+            .select('-_id -__v')
+            .lean();
 
         return data;
     }
