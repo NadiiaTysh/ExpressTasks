@@ -33,6 +33,9 @@ export const userSchema = {
         password: {
             type: 'string',
         },
+        notes: {
+            type: 'string',
+        },
         sex: {
             type: 'string',
             enum: [ 'f', 'm' ],

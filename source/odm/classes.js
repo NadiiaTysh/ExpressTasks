@@ -3,28 +3,46 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { users, lessons } from './';
 
+function dateValidator(value) {
+    return this.duration.started < value;
+}
+
 const childStudents = new mongoose.Schema({
     user: {
-        type: mongoose.SchemaTypes.ObjectId,
-        ref:  users,
+        type:     mongoose.SchemaTypes.ObjectId,
+        required: true,
+        ref:      users,
     },
     status:   String,
     expelled: Boolean,
-    notes:    String,
+    notes:    {
+        type:      String,
+        required:  true,
+        maxlength: 250,
+    },
 }, { _id: false });
 
 const childLessons = new mongoose.Schema({
     lesson: {
-        type: mongoose.SchemaTypes.ObjectId,
-        ref:  lessons,
+        type:     mongoose.SchemaTypes.ObjectId,
+        required: true,
+        ref:      lessons,
     },
     scheduled: Date,
 }, { _id: false });
 
 const classSchema = new mongoose.Schema({
-    title:       String,
-    description: String,
-    hash:        {
+    title: {
+        type:      String,
+        required:  true,
+        maxlength: 30,
+    },
+    description: {
+        type:      String,
+        required:  true,
+        maxlength: 250,
+    },
+    hash: {
         type:    String,
         unique:  true,
         default: uuidv4,
@@ -32,10 +50,19 @@ const classSchema = new mongoose.Schema({
     students: [ childStudents ],
     lessons:  [ childLessons ],
     duration: {
-        started: Date,
-        closed:  Date,
+        started: {
+            type: Date,
+        },
+        closed: {
+            type:     Date,
+            validate: [ dateValidator, 'Closed day cannot be earlier than Started day' ],
+        },
     },
-    order: Number,
+    order: {
+        type:     Number,
+        required: true,
+        min:      0,
+    },
 }, { timestamps: { createdAt: 'created', updatedAt: 'modified' } });
 
 classSchema.index({ title: 'text', description: 'text' });

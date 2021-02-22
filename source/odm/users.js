@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
 
+import { validUri, validEmail } from './helper';
+
 const childPhones = new mongoose.Schema({
     phone:   String,
     primary: Boolean,
@@ -8,40 +10,68 @@ const childPhones = new mongoose.Schema({
 
 const childEmails = new mongoose.Schema({
     email: {
-        type:   String,
-        unique: true,
+        type:     String,
+        required: true,
+        match:    [ validEmail, 'Please fill a valid email address' ],
+        unique:   true,
     },
     primary: Boolean,
 }, { _id: false });
 
 const userSchema = new mongoose.Schema({
     name: {
-        first: String,
-        last:  String,
+        first: {
+            type:      String,
+            required:  true,
+            minlength: 2,
+            maxlength: 15,
+        },
+        last: {
+            type:      String,
+            required:  true,
+            minlength: 2,
+            maxlength: 15,
+        },
     },
     phones:   [ childPhones ],
     emails:   [ childEmails ],
     password: {
         type:     String,
-        select:   false,
         required: true,
+        select:   false,
     },
     sex:   String,
     roles: [
         {
-            type:    String,
-            default: 'newbie',
-            enum:    [ 'newbie', 'student', 'teacher' ],
+            type:     String,
+            required: true,
+            default:  'newbie',
+            enum:     [ 'newbie', 'student', 'teacher' ],
         },
     ],
     social: {
-        facebook: String,
-        linkedin: String,
-        github:   String,
-        skype:    String,
+        facebook: {
+            type:  String,
+            match: validUri,
+        },
+        linkedin: {
+            type:  String,
+            match: validUri,
+        },
+        github: {
+            type:  String,
+            match: validUri,
+        },
+        skype: {
+            type:  String,
+            match: validUri,
+        },
     },
-    notes: String,
-    hash:  {
+    notes: {
+        type:      String,
+        maxlength: 250,
+    },
+    hash: {
         type:    String,
         unique:  true,
         default: uuidv4,
