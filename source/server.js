@@ -32,6 +32,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use('/students', routers.students);
+app.use('/staff', routers.staff);
 app.use('/', routers.auth);
 app.use('/classes', routers.classes);
 app.use('/lessons', routers.lessons);
