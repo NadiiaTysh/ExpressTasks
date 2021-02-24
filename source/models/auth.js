@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 
-import { users } from '../odm';
+import { students } from '../odm';
 
 export class Auth {
     constructor(data) {
@@ -13,11 +13,11 @@ export class Auth {
         const [ userEmail, plainPassword ] = Buffer.from(auth, 'base64').toString()
             .split(':');
 
-        const data = await users
+        const data = await students
             .findOne({ 'emails.email': userEmail })
             .select('password emails roles hash')
             .lean();
-
+        console.log(data);
         if (!data) {
             throw new Error('No user found');
         }

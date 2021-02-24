@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
 
-import { users, lessons } from './';
+import { students, lessons } from './';
 
 function dateValidator(value) {
     return this.duration.started < value;
@@ -11,7 +11,7 @@ const childStudents = new mongoose.Schema({
     user: {
         type:     mongoose.SchemaTypes.ObjectId,
         required: true,
-        ref:      users,
+        ref:      students,
     },
     status:   String,
     expelled: Boolean,
@@ -74,7 +74,7 @@ classSchema.path('students').validate(async function(value) {
     const addedUsersInClass = [];
     value.every((userObject) => addedUsersInClass.push(userObject.user));
 
-    const data = await users.find({});
+    const data = await students.find({});
     const existingUsers = [];
     data.every((userInDb) => existingUsers.push(userInDb._id));
 

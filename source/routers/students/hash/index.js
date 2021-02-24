@@ -1,11 +1,11 @@
-import { Users } from '../../../controllers';
+import { Students } from '../../../controllers';
 
 export const getByHash = async (req, res) => {
     try {
-        const { userHash } = req.params;
+        const { studentHash } = req.params;
 
-        const user = new Users();
-        const data = await user.getOneRecord(userHash);
+        const student = new Students();
+        const data = await student.getOneRecord(studentHash);
 
         res.status(200).json({ data });
     } catch (error) {
@@ -14,11 +14,11 @@ export const getByHash = async (req, res) => {
 };
 export const updateByHash = async (req, res) => {
     try {
-        const { userHash } = req.params;
+        const { studentHash } = req.params;
         const payload = req.body;
 
-        const user = new Users();
-        const data = await user.modifyOneRecord(userHash, payload);
+        const student = new Students();
+        const data = await student.modifyOneRecord(studentHash, payload);
 
         res.status(200).json({ data });
     } catch (error) {
@@ -27,10 +27,10 @@ export const updateByHash = async (req, res) => {
 };
 export const deleteByHash = async (req, res) => {
     try {
-        const { userHash } = req.params;
+        const { studentHash } = req.params;
 
-        const user = new Users();
-        await user.removeOneRecord(userHash);
+        const student = new Students();
+        await student.removeOneRecord(studentHash);
 
         res.sendStatus(204);
     } catch (error) {

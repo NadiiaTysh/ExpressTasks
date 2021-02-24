@@ -1,4 +1,4 @@
-export { users } from './users';
+export { students } from './students';
 export { lessons } from './lessons';
 export { classes } from './classes';
 export { logs } from './logs';

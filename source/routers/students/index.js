@@ -14,8 +14,8 @@ const router = express.Router();
 router.get('/', [ limiter(2, 1000 * 60), authenticate ], get);
 router.post('/', [ validator(userSchema) ], post);
 
-router.get('/:userHash', [ limiter(2, 1000 * 60), authenticate ], getByHash);
-router.put('/:userHash', [ validator(userSchema), authenticate ], updateByHash);
-router.delete('/:userHash', [ authenticate ], deleteByHash);
+router.get('/:studentHash', [ limiter(2, 1000 * 60), authenticate ], getByHash);
+router.put('/:studentHash', [ validator(userSchema), authenticate ], updateByHash);
+router.delete('/:studentHash', [ authenticate ], deleteByHash);
 
-export { router as users };
+export { router as students };

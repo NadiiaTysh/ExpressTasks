@@ -1,10 +1,10 @@
-import { Users } from '../../controllers';
+import { Students } from '../../controllers';
 import { Logs } from '../../controllers';
 
 export const get = async (req, res) => {
     try {
-        const users = new Users();
-        const data = await users.getAllRecords();
+        const students = new Students();
+        const data = await students.getAllRecords();
 
         res.status(200).json({ data });
     } catch (error) {
@@ -13,8 +13,8 @@ export const get = async (req, res) => {
 };
 export const post = async (req, res) => {
     try {
-        const user = new Users(req.body);
-        const data = await user.create();
+        const student = new Students(req.body);
+        const data = await student.create();
         const log = new Logs(req);
         await log.create();
 

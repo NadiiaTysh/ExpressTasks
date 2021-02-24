@@ -31,7 +31,7 @@ if (process.env.NODE_ENV === 'development') {
     });
 }
 
-app.use('/users', routers.users);
+app.use('/students', routers.students);
 app.use('/', routers.auth);
 app.use('/classes', routers.classes);
 app.use('/lessons', routers.lessons);

@@ -1,5 +1,5 @@
 import { classes } from '../odm';
-import { users } from '../odm';
+import { students } from '../odm';
 import { errorLogger } from '../utils';
 
 export class Classes {
@@ -50,7 +50,7 @@ export class Classes {
     async enrollStudent(classHash, payload) {
         try {
             const { user: userHash } = payload;
-            const userToEnroll = await users.findOne({ hash: userHash });
+            const userToEnroll = await students.findOne({ hash: userHash });
 
             if (!userToEnroll) {
                 throw Error(`User ${userHash} does not exist`);
@@ -84,7 +84,7 @@ export class Classes {
     async expelStudent(classHash, payload) {
         try {
             const { user: userHash } = payload;
-            const userToExpel = await users.findOne({ hash: userHash });
+            const userToExpel = await students.findOne({ hash: userHash });
 
             if (!userToExpel) {
                 throw Error(`User ${userHash} does not exist`);
